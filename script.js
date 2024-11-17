@@ -29,6 +29,14 @@ function startClock() {
     // Play Birthday sound
     const birthdaySound = new Audio("happy-birthday-220024.mp3"); // Change this to your birthday sound URL
 
+    // Flag to check if sound has already been played
+    let soundPlayed = false;
+
+    birthdaySound.addEventListener('canplaythrough', () => {
+        // Ensure the sound can play
+        birthdaySound.volume = 1; // Make sure the volume is at max
+    });
+
     function updateClock() {
         const currentTime = new Date();
         const hours = currentTime.getHours();
@@ -54,14 +62,22 @@ function startClock() {
                 birthdayMessageElem.style.display = "block";
                 birthdayMessageElem.innerText = "Happy Birthday Chirag!";
                 generateConfetti(); // Show confetti when message appears
-                birthdaySound.play(); // Play the sound
+                if (!soundPlayed) {
+                    birthdaySound.play().catch(error => {
+                        console.error("Error playing the sound:", error);
+                    }); // Play the sound only once
+                    soundPlayed = true; // Set the flag so the sound doesn't play again
+                }
             }
         } else {
             birthdayMessageElem.style.display = "none";
+            soundPlayed = false; // Reset the sound flag if it's not birthday time
         }
     }
 
+    // Update the clock every second
     setInterval(updateClock, 1000);
 }
 
-startClock();
+// Trigger the clock on a user interaction (e.g., a button click)
+document.getElementById("startButton").addEventListener("click", startClock);
