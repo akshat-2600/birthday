@@ -27,7 +27,7 @@ function startClock() {
     }
 
     // Play Birthday sound
-    const birthdaySound = new Audio("https://www.soundjay.com/button/beep-07.wav"); // Change this to your birthday sound URL
+    const birthdaySound = new Audio("C:\Users\lenovo\Desktop\Birthday\happy-birthday-220024.mp3"); // Change this to your birthday sound URL
 
     function updateClock() {
         const currentTime = new Date();
